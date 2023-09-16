@@ -4,7 +4,6 @@ const axios = require('axios');
 
 const prisma = new PrismaClient()
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
 const productsRouter = require('./routes/products');
 const authRouter = require('./routes/auth');
 const authenticateToken = require('./middlewares/authenticateToken.js');
@@ -20,7 +19,6 @@ app.use('/products', authenticateToken);
 
 // ROTAS
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/products', productsRouter);
 app.use('/auth', authRouter);
 

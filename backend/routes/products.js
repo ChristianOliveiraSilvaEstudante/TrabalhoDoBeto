@@ -111,7 +111,7 @@ router.put('/:id', async (req, res) => {
         },
       },
       include: {
-        images: true, atualizado
+        images: true,
       },
     });
 

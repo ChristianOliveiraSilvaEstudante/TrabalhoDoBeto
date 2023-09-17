@@ -1,10 +1,11 @@
+import MainLayout from "../../layouts/main";
 
 
 function Page() {
     return (
-      <div className="page-container">
-        
-      </div>
+      <MainLayout>
+        <h1>sdafsfs\</h1>
+      </MainLayout>
     );
   }
   

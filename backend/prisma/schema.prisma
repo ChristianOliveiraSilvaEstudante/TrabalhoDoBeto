@@ -33,6 +33,6 @@ model Product {
 model Image {
   id Int @id @default(autoincrement())
   url String?
-  produto Product @relation(fields: [produtoId], references: [id])
+  product Product @relation(fields: [produtoId], references: [id])
   produtoId Int
 }

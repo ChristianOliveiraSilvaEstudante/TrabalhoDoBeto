@@ -5,7 +5,7 @@ const prisma = new PrismaClient()
 
 // Rota para criar um novo produto
 router.post('/', async (req, res) => {
-  const { title, description, price, discountPercentage, rating, stock, brand, category, thumbnail, images } = req.body;
+  const { title, description, price, discountPercentage, rating, stock, brand, category, thumbnail } = req.body;
 
   try {
     const product = await prisma.product.create({
@@ -18,14 +18,8 @@ router.post('/', async (req, res) => {
         stock,
         brand,
         category,
-        thumbnail,
-        images: {
-          create: images,
-        },
-      },
-      include: {
-        images: true,
-      },
+        thumbnail
+      }
     });
 
     res.json(product);

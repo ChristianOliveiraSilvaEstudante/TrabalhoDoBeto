@@ -8,6 +8,7 @@ const productsRouter = require('./routes/products');
 const authRouter = require('./routes/auth');
 const authenticateToken = require('./middlewares/authenticateToken.js');
 const cors = require('cors');
+const e = require('express');
 
 const app = express();
 
@@ -43,11 +44,13 @@ async function main() {
     // Fazer a requisição GET
     axios.get(apiUrl)
         .then(async response => {
-            await prisma.product.createMany({
-                data: response.data.products.map(({ images, ...rest }) => rest) // ver como inserir images junto pq nn ta indo
-            })
-            .then(e => console.log('Todos os produtos foram inseridos'))
-            .catch(e => console.log('Erro ao salvar produtos'));
+            response.data.products.forEach(async (product) => {
+                await prisma.product.create({
+                    data: {...product, images: { create: product.images.map(i => ({url: i})) } }
+                })
+                .then(e => console.log('Produtos foram inseridos'))
+                .catch(e => console.log('Erro ao salvar produtos', e));
+            });
         })
         .catch(error => {
             console.error('Erro na requisição:', error);

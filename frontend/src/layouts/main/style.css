@@ -7,6 +7,8 @@
     background-color: #ffffff;
     padding: 2rem;
     box-shadow: 3px 0px 3px black;
+    display: flex;
+    justify-content: space-between;
 }
 
 .main-container main {

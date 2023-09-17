@@ -7,12 +7,25 @@ import './style.css'
 
 function Page() {
     const [products, setProducts] = useState([])
+    const [showInsertProductSection, setShowInsertProductSection] = useState(false)
     let page = 1;
+
+
+    // inputs
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [price, setPrice] = useState(0);
+    const [discountPercentage, setDiscountPercentage] = useState(0);
+    const [rating, setRating] = useState(0);
+    const [stock, setStock] = useState(0);
+    const [brand, setBrand] = useState('');
+    const [category, setCategory] = useState('');
+    const [thumbnail, setThumbnail] = useState('');
 
     const loadProducts = () => {
       axios.get(`http://localhost:3001/products?page=${page}`, {
         headers: {
-          'Authorization': `${localStorage.getItem('token')}`
+          'Authorization': localStorage.getItem('token')
         }
       })
         .then((response) => {
@@ -25,8 +38,33 @@ function Page() {
         });
     }
 
+    const handleAddProduct = () => {
+      axios.post(`http://localhost:3001/products`, {
+        title,
+        description,
+        price,
+        discountPercentage,
+        rating,
+        stock,
+        brand,
+        category,
+        thumbnail,
+        images: []
+      }, {
+        headers: {
+          'Authorization': localStorage.getItem('token')
+        }
+      })
+        .then((response) => {
+          alert('Produto adicionado com sucesso')
+          setShowInsertProductSection(false)
+        })
+        .catch((error) => {
+          console.error('Erro ao buscar dados da rota:', error);
+        });
+    }
+
     useEffect(() => {
-      setProducts([])
       loadProducts()
     }, []);
 
@@ -55,7 +93,27 @@ function Page() {
       <MainLayout>
         <header>
           <h1>Listão do Betão</h1>
+
+          <button onClick={() => setShowInsertProductSection(true)}>Adicionar</button>
         </header>
+
+        {
+          showInsertProductSection && (
+            <div className="insert-product-container">
+              <h3>Adicione um produto</h3>
+              <input placeholder="Título" value={title} onChange={(e) => setTitle(e.target.value)} />
+              <input placeholder="Descrição" value={description} onChange={(e) => setDescription(e.target.value)} />
+              <input placeholder="Preço" value={price} onChange={(e) => setPrice(e.target.value)} />
+              <input placeholder="Desconto" value={discountPercentage} onChange={(e) => setDiscountPercentage(e.target.value)} />
+              <input placeholder="Avaliação" value={rating} onChange={(e) => setRating(e.target.value)} />
+              <input placeholder="Estoque" value={stock} onChange={(e) => setStock(e.target.value)} />
+              <input placeholder="Marca" value={brand} onChange={(e) => setBrand(e.target.value)} />
+              <input placeholder="Categoria" value={category} onChange={(e) => setCategory(e.target.value)} />
+              <input placeholder="Thumbnail" value={thumbnail} onChange={(e) => setThumbnail(e.target.value)} />
+              <button onClick={handleAddProduct}>Adicionar</button>
+            </div>
+          )
+        }
 
         <main>
           <h3>Total: {products.length}</h3>

@@ -3,7 +3,7 @@ import './style.css'
 
 function AuthLayout({children}) {
     return (
-        <main className='main-container'>
+        <main className='auth-container'>
             {children}
         </main>
     );

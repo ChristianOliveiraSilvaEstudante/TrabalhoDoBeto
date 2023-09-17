@@ -4,17 +4,19 @@ import { useEffect } from 'react';
 import { isUserLoggedIn } from '../../utils';
 import './style.css'
 
-function MainLayout() {
-    const navigate = useNavigate();
+function MainLayout({children}) {
+    // const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!isUserLoggedIn()) {
-            navigate('/login');
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (!isUserLoggedIn()) {
+    //         navigate('/login');
+    //     }
+    // }, [])
 
     return (
-        <main></main>
+        <main className='main-container'>
+            {children}
+        </main>
     );
 }
   

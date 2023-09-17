@@ -1,0 +1,14 @@
+
+.list-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+    margin-block: 20px;
+}
+  
+.list-item {
+    flex-basis: calc(34% - 20px);
+    margin-bottom: 20px;
+}

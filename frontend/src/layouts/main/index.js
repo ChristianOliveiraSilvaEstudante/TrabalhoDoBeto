@@ -5,13 +5,13 @@ import { isUserLoggedIn } from '../../utils';
 import './style.css'
 
 function MainLayout({children}) {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     if (!isUserLoggedIn()) {
-    //         navigate('/login');
-    //     }
-    // }, [])
+    useEffect(() => {
+        if (!isUserLoggedIn()) {
+            navigate('/login');
+        }
+    }, [])
 
     return (
         <main className='main-container'>

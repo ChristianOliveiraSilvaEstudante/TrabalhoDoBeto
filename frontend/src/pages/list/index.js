@@ -7,27 +7,38 @@ import './style.css'
 
 function Page() {
     const [products, setProducts] = useState([])
+    let page = 1;
 
-    useEffect(() => {
-      // Faz uma solicitação Axios para a sua rota
-      axios.get('http://localhost:3001/products')
+    const loadProducts = () => {
+      axios.get(`http://localhost:3001/products?page=${page}`, {
+        headers: {
+          'Authorization': `${localStorage.getItem('token')}`
+        }
+      })
         .then((response) => {
           const data = response.data;
   
-          setProducts(data);
+          setProducts((prevProducts) => prevProducts.concat(data))
         })
         .catch((error) => {
           console.error('Erro ao buscar dados da rota:', error);
         });
+    }
+
+    useEffect(() => {
+      setProducts([])
+      loadProducts()
     }, []);
 
     useEffect(() => {
       const handleScroll = () => {
         // Verifica se o usuário chegou ao final da página
         if (
+          document.documentElement.scrollTop > 7e2 &&
           window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight
         ) {
-          // setProducts((prevProducts) => prevProducts.concat(Array(10).fill(demo)))
+          page++
+          loadProducts()
         }
       };
   

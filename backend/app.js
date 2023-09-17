@@ -7,10 +7,12 @@ const indexRouter = require('./routes/index');
 const productsRouter = require('./routes/products');
 const authRouter = require('./routes/auth');
 const authenticateToken = require('./middlewares/authenticateToken.js');
+const cors = require('cors');
 
 const app = express();
 
 // CONFIGURAÇÕES DO SERVDOR
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
